@@ -1,0 +1,12 @@
+N,strategy,attacker_type,attack_success_rate_mean,attack_success_rate_std,mean_l2_mean,mean_l2_std,n_seeds
+10,random,whitebox,0.06,0.0548,0.0,0.0,5
+10,class_balanced,whitebox,0.0,0.0,0.0,0.0,5
+50,random,whitebox,0.12,0.0849,0.113,0.05,5
+50,class_balanced,whitebox,0.052,0.046,0.0614,0.037,5
+100,random,whitebox,0.2,0.0566,0.1503,0.0547,5
+100,class_balanced,whitebox,0.12,0.0469,0.1132,0.065,5
+500,random,whitebox,0.436,0.0555,0.3452,0.0779,5
+500,class_balanced,whitebox,0.412,0.0782,0.3067,0.0897,5
+1000,random,whitebox,0.564,0.1178,0.4358,0.0806,5
+1000,class_balanced,whitebox,0.52,0.0616,0.3658,0.0563,5
+100,class_balanced,de_blackbox,0.12,0.0469,0.5055,0.0431,5
