@@ -1,0 +1,6 @@
+N,baseline_failure_mean,baseline_failure_std,raw_wb_success_mean,raw_wb_success_std,cond_wb_success_mean,cond_wb_success_std
+10,0.0,0.0,0.0,0.0,0.0,0.0
+50,0.04,0.0316,0.052,0.046,0.0129,0.0191
+100,0.092,0.0415,0.12,0.0469,0.031,0.0201
+500,0.372,0.0687,0.412,0.0782,0.065,0.0514
+1000,0.476,0.0477,0.52,0.0616,0.0863,0.0379

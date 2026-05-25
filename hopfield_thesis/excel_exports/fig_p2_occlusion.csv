@@ -1,0 +1,6 @@
+N,accuracy_random_mean,accuracy_random_std,accuracy_classbal_mean,accuracy_classbal_std
+10,0.9,0.0707,1.0,0.0
+50,0.8,0.0927,0.864,0.0555
+100,0.708,0.0756,0.768,0.0576
+500,0.344,0.0817,0.456,0.0623
+1000,0.304,0.1161,0.308,0.0642

@@ -1,0 +1,3 @@
+attacker,success_rate_mean,success_rate_std,mean_l2_mean,mean_l2_std,mean_evaluations
+whitebox,0.12,0.0469,0.1132,0.065,3920.0
+DE_blackbox,0.12,0.0469,0.5055,0.0431,40080.0

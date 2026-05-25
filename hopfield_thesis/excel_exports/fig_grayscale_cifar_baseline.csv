@@ -1,0 +1,6 @@
+N,baseline_failure_mean,baseline_failure_std,mean_pairwise_cosine_mean,mean_pairwise_cosine_std
+10,0.8,0.1732,0.6489,0.05103
+20,0.88,0.1304,0.73825,0.0289
+30,0.94,0.0435,0.7747,0.0108
+50,0.94,0.0616,0.79841,0.01134
+100,0.984,0.0167,0.81833,0.00921

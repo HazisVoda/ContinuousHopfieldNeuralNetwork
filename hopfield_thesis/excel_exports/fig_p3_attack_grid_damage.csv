@@ -1,0 +1,6 @@
+N,effective_damage_rand_mean,effective_damage_rand_std,effective_damage_cb_mean,effective_damage_cb_std
+10,0.0,,0.0,
+50,0.0136,,0.0032,
+100,0.0301,,0.0136,
+500,0.1505,,0.1264,
+1000,0.2458,,0.1902,

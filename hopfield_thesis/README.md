@@ -364,6 +364,43 @@ reduces the margin needed to cause mis-retrieval.
 
 ---
 
+## Excel-ready exports and grayscale CIFAR baseline
+
+### Excel-ready exports (`excel_exports/`)
+
+The `excel_exports/` directory contains one CSV file per thesis figure, formatted
+for direct import into Excel or any spreadsheet tool:
+
+- **Wide format** — each column is one data series (one line or bar group in a chart).
+  The first column is always the x-axis variable (N values, σ, β, etc.).
+- **Mean and std as separate columns** — allows Excel to use the std columns as
+  custom error bars via the *Error Bars → Custom* option in chart formatting.
+- **No merged cells or formatting** — plain UTF-8 comma-separated, one header row only.
+- **`INDEX.csv`** — master index listing every file, its source CSV or script,
+  the corresponding thesis figure name, and a short description.
+
+Run: `python -m experiments.export_for_excel`
+
+### Grayscale CIFAR-10 baseline (`experiments/grayscale_cifar_baseline.py`)
+
+A characterisation-only experiment — **no adversarial attacks** — included for
+thesis flexibility.  CIFAR-10 training images (50,000 × 32×32 RGB) are converted
+to 1024-dimensional grayscale vectors using standard luminance weights
+(0.2989 R + 0.5870 G + 0.1140 B) and normalised to [0, 1].  Clean retrieval
+baseline failure rate and mean pairwise cosine similarity are measured at
+N ∈ {10, 20, 30, 50, 100} across 5 seeds.
+
+**Result:** Baseline failure of 98.4% at N=100 (mean pairwise cosine 0.818)
+confirms that grayscale CIFAR-10 is outside the network's reliable retrieval
+regime at all tested N values.  This is consistent with the Fashion-MNIST finding
+(80% failure at N=100) and the pattern-crowding mechanism characterised in Phase 2:
+natural image datasets with higher inter-pattern similarity saturate the network's
+capacity far below the MNIST operating point.
+
+Run: `python -m experiments.grayscale_cifar_baseline`
+
+---
+
 ## Roadmap
 
 | Phase | Description |

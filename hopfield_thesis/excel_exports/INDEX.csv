@@ -1,0 +1,20 @@
+csv_filename,source_python_csv_or_script,thesis_figure_name,description_short
+fig_p1_capacity.csv,phase1_sanity.py (stdout),Phase 1 Check 4,"Capacity stress test: retrieval accuracy vs N at sigma=0.2, seed=42"
+fig_p1_beta_diagnostic.csv,phase1_beta_diagnostic.py (stdout),Phase 1 Beta sweep,"Beta calibration: retrieval accuracy vs beta at N=1000, sigma=0.2, seed=42"
+fig_p2_gaussian.csv,phase2_results.csv,Phase 2 Gaussian,"Gaussian noise retrieval accuracy vs sigma, wide format, all N/strategy, seed=42"
+fig_p2_pixelflip.csv,phase2_results.csv,Phase 2 Pixel-flip,"Pixel-flip retrieval accuracy vs flip_rate, wide format, all N/strategy, seed=42"
+fig_p2_occlusion.csv,phase2_stability_summary.csv,Phase 2 Occlusion,"Half-occlusion retrieval accuracy vs N, mean+std across 5 seeds"
+fig_p2_stability.csv,phase2_stability_summary.csv,Phase 2 Stability,"All noise types: accuracy mean+std across 5 seeds, all N/strategy"
+fig_p3_attack_grid_success.csv,phase3_whitebox_results.csv,Phase 3 Attack grid (success),"White-box attack success rate vs N, mean+std across 5 seeds, both strategies"
+fig_p3_attack_grid_l2.csv,phase3_whitebox_results.csv,Phase 3 Attack grid (L2),"White-box mean perturbation L2 vs N, mean+std across 5 seeds"
+fig_p3_attack_grid_damage.csv,phase3_whitebox_results.csv,Phase 3 Attack grid (damage),"Effective attack damage (success_rate x mean_L2) vs N, both strategies"
+fig_p3_attack_vs_random.csv,phase3_diag_c_matched_sigma.csv + phase3_diag_b_baseline_corrected.csv,Phase 3 Attack vs random noise,"Conditional failure rate: sigma sweep + WB reference, N=100 class-balanced"
+fig_p3_whitebox_vs_de.csv,phase3_whitebox_results.csv + phase3_blackbox_results.csv,Phase 3 WB vs DE,"White-box vs DE black-box: success rate, L2, evaluations at N=100 class-balanced"
+fig_p3_diag_b_baseline_corrected.csv,phase3_diag_b_baseline_corrected.csv,Phase 3 Diag B,"Baseline-corrected attack effectiveness: baseline/raw/conditional WB vs N, class-balanced"
+fig_p3_diag_c_sigma_sweep.csv,phase3_diag_c_matched_sigma.csv,Phase 3 Diag C,"Magnitude-matched sigma sweep: conditional RNE failure vs sigma, N=100 class-balanced"
+fig_p3_diag_d_classes.csv,phase3_diag_d_summary.csv,Phase 3 Diag D (classes),Vulnerable probe class distribution: count vs digit class (0-9)
+fig_p3_diag_d_features.csv,phase3_diag_d_probe_features.csv,Phase 3 Diag D (features),Probe geometry features in long format for grouped boxplots in Excel
+fig_p3_pixel_value_distribution.csv,phase3_whitebox_results.csv,Phase 3 Pixel distribution,Adversarial vs original pixel value distribution across 5 candidate values
+fig_p3_pixel_transition_matrix.csv,phase3_pixel_value_analysis.csv,Phase 3 Pixel transition,5x5 transition matrix: original pixel bin to adversarial pixel value (counts)
+fig_p3_fashion_mnist_comparison.csv,phase3_fashion_mnist_summary.csv + phase3_diag_b/c/d_*.csv,Phase 3 FMNIST comparison,MNIST vs Fashion-MNIST: key metrics comparison including transfer prediction accuracy
+fig_grayscale_cifar_baseline.csv,grayscale_cifar_baseline_results.csv,CIFAR Grayscale Baseline,"Grayscale CIFAR-10 baseline failure rate and pairwise cosine vs N, 5 seeds"

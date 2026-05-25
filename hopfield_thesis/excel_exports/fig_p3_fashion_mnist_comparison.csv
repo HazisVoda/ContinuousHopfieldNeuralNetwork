@@ -1,0 +1,8 @@
+metric,MNIST_mean,MNIST_std,FashionMNIST_mean,FashionMNIST_std
+baseline_failure,0.092,0.0415,0.8,0.0447
+conditional_wb_success,0.031,0.0201,0.0758,0.0442
+conditional_random_failure,0.0086,0.0118,0.0,0.0
+amplification_factor,3.6047,0.0,75780.0,0.0
+mnist_native_predictor,0.8516,0.0503,0.0,0.0
+mnist_to_fmnist_transfer,0.398,0.0,0.398,0.0
+fmnist_native_predictor,0.0,0.0,0.576,0.256
