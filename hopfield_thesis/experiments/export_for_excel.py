@@ -104,7 +104,7 @@ def export_p1_beta():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. fig_p2_gaussian.csv  (wide: sigma × N*strategy accuracy)
+# 3. fig_p2_gaussian.csv  (wide: sigma x N*strategy accuracy)
 # 4. fig_p2_pixelflip.csv
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -136,7 +136,7 @@ def export_p2_noise_wide(noise_type: str, out_name: str):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5. fig_p2_occlusion.csv  (N × mean/std from stability CSV)
+# 5. fig_p2_occlusion.csv  (N x mean/std from stability CSV)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def export_p2_occlusion():
@@ -157,7 +157,7 @@ def export_p2_occlusion():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 6. fig_p2_stability.csv  (N × 12 series: noise_type × strategy × mean/std)
+# 6. fig_p2_stability.csv  (N x 12 series: noise_type x strategy x mean/std)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def export_p2_stability():
@@ -189,7 +189,7 @@ def export_p2_stability():
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _p3_wb_agg() -> dict:
-    """Aggregate phase3_whitebox_results.csv → {(N, strategy): {metric: (mean, std)}}."""
+    """Aggregate phase3_whitebox_results.csv -> {(N, strategy): {metric: (mean, std)}}."""
     wb = read_csv("phase3_whitebox_results.csv")
     cell_data: dict[tuple, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     seed_seen: dict[tuple, set] = defaultdict(set)
@@ -497,7 +497,7 @@ def export_p3_pixel_distribution():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 17. fig_p3_pixel_transition_matrix.csv  (5×5 wide)
+# 17. fig_p3_pixel_transition_matrix.csv  (5x5 wide)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def export_p3_pixel_transition():
@@ -562,7 +562,7 @@ def export_p3_fmnist_comparison():
     # FMNIST predictors — hardcoded from phase3_final_diagnostics stdout
     fm_native_m,   fm_native_s   = 0.576, 0.256
     fm_transfer_m, fm_transfer_s = 0.398, 0.0    # single value (no std)
-    mn_transfer_m, mn_transfer_s = 0.398, 0.0    # transfer is MNIST→FMNIST
+    mn_transfer_m, mn_transfer_s = 0.398, 0.0    # transfer is MNIST->FMNIST
 
     metrics = [
         ("baseline_failure",       mn_bl_m, mn_bl_s,    fm_bl_m, fm_bl_s),

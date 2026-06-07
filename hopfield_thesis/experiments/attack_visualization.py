@@ -1,11 +1,13 @@
 """
-Post-attack visualization: CIFAR two-stage and MNIST one-pixel attack images.
+Post-attack visualization: all dataset image grids and cross-dataset summary.
 
-Generates 4 figures:
-  1. attack_cifar_image_grid.png      — clean vs 3 attack variants, all 10 CIFAR classes
-  2. attack_cifar_conditions.png      — 2×2 condition comparison bar chart (null result)
-  3. attack_mnist_examples.png        — MNIST successful one-pixel attack examples
-  4. attack_cross_dataset.png         — MNIST / FMNIST / CIFAR side-by-side
+Generates figures:
+  1. attack_mnist_examples.png           — MNIST successful one-pixel attack examples
+  2. attack_cross_dataset.png            — MNIST / FMNIST / CIFAR side-by-side summary
+  3. attack_mnist_image_grid.png         — 4-column MNIST grid (seed 42)
+  4. attack_fmnist_image_grid.png        — 4-column FMNIST grid (seed 44)
+  5. attack_cifar_centered_N100_grid.png — 5-column centered CIFAR N=100 (seed 42)
+  6. attack_cifar_centered_N500_grid.png — 5-column centered CIFAR N=500 (seed 45)
 
 Run: python -m experiments.attack_visualization
 """
@@ -115,7 +117,7 @@ def load_phase3_vulnerable(n: int = 100, strategy: str = "class_balanced",
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _png_gray(path: Path) -> np.ndarray:
-    """Read grayscale PNG (saved with cmap='gray') → (32, 32) float in [0,1]."""
+    """Read grayscale PNG (saved with cmap='gray') -> (32, 32) float in [0,1]."""
     arr = mpimg.imread(str(path))   # (32, 32, 4) RGBA or (32, 32, 3)
     if arr.dtype == np.uint8:
         arr = arr.astype(np.float32) / 255.0
@@ -123,7 +125,7 @@ def _png_gray(path: Path) -> np.ndarray:
 
 
 def _png_rgb(path: Path) -> np.ndarray:
-    """Read color PNG → (32, 32, 3) float in [0,1]."""
+    """Read color PNG -> (32, 32, 3) float in [0,1]."""
     arr = mpimg.imread(str(path))
     if arr.dtype == np.uint8:
         arr = arr.astype(np.float32) / 255.0
@@ -153,7 +155,7 @@ def fig_cifar_image_grid(X_stored: torch.Tensor) -> None:
     seed_dir = ONE_PIX_DIR / f"seed_{seed}"
     rows     = load_cifar_two_stage_results(seed)
 
-    # columns: clean | A1 gray attack | A2 RGB→gray | A2 RGB color | Retrieved (A1)
+    # columns: clean | A1 gray attack | A2 RGB->gray | A2 RGB color | Retrieved (A1)
     n_cols   = 5
     n_rows   = 10
     col_titles = [
@@ -229,9 +231,9 @@ def fig_cifar_image_grid(X_stored: torch.Tensor) -> None:
                     )
             elif col_idx == 4:
                 # Label retrieved class; highlight if different from true class
-                match = "=" if ret_class == cname else "≠"
+                match = "=" if ret_class == cname else "!="
                 color = "green" if ret_class == cname else "red"
-                ax.set_title(f"→ {ret_class} {match}", fontsize=7,
+                ax.set_title(f"-> {ret_class} {match}", fontsize=7,
                              pad=2, color=color, fontweight="bold")
 
         # Row label
@@ -327,10 +329,10 @@ def fig_cifar_conditions() -> None:
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=8)
     ax.set_ylim(-0.08, 1.1)
-    ax.set_ylabel("Rate (mean ± std, 5 seeds)", fontsize=9)
+    ax.set_ylabel("Rate (mean +/- std, 5 seeds)", fontsize=9)
     ax.set_title(
-        "Grayscale CIFAR-10 — 2×2 Two-Stage Attack: All Conditions (N=10, β=8.0)\n"
-        "Conditional success = 0% across all conditions → "
+        "Grayscale CIFAR-10 — 2x2 Two-Stage Attack: All Conditions (N=10, β=8.0)\n"
+        "Conditional success = 0% across all conditions -> "
         "Null result extends to all attack configurations",
         fontsize=9, fontweight="bold",
     )
@@ -380,7 +382,7 @@ def fig_mnist_examples(mnist_images: torch.Tensor, mnist_labels: torch.Tensor) -
 
     fig.suptitle(
         "MNIST One-Pixel White-Box Attack — Successful Examples\n"
-        "N=100 class-balanced · β=8.0 · 3,920 candidates (784 × 5)",
+        "N=100 class-balanced · β=8.0 · 3,920 candidates (784 x 5)",
         fontsize=10, fontweight="bold",
     )
     col_titles = ["Clean stored pattern", "After one-pixel attack\n(pixel highlighted)",
@@ -405,7 +407,7 @@ def fig_mnist_examples(mnist_images: torch.Tensor, mnist_labels: torch.Tensor) -
 
         for ci, (vec, label, highlight) in enumerate([
             (q_clean,    f"Digit {true_class}", False),
-            (q_attacked, f"Digit {true_class}\n→ pixel ({pi},{pj}): {ov:.2f}→{pv:.2f}", True),
+            (q_attacked, f"Digit {true_class}\n-> pixel ({pi},{pj}): {ov:.2f}->{pv:.2f}", True),
             (X[:, ri],   f"Retrieved: digit {ret_class}", False),
         ]):
             ax  = axes[ei, ci]
@@ -588,8 +590,8 @@ def fig_dataset_image_grid(
     Columns:
       1. Clean stored pattern
       2. Attacked query (A condition) — pixel highlighted; green border if success
-      3. A: Retrieved stored pattern   — green "=" or red "≠"
-      4. B: Retrieved stored pattern   — green "=" or red "≠" (clean query, poisoned store)
+      3. A: Retrieved stored pattern   — green "=" or red "!="
+      4. B: Retrieved stored pattern   — green "=" or red "!=" (clean query, poisoned store)
 
     Row selection: one probe per class (10 rows), preferring attack successes.
     """
@@ -639,7 +641,7 @@ def fig_dataset_image_grid(
     )
 
     # Correct column title for A candidates
-    n_cands = img_sz * img_sz * 5   # 784 × 5 = 3920
+    n_cands = img_sz * img_sz * 5   # 784 x 5 = 3920
     axes[0, 1].set_title(f"Attacked query\n(A: {n_cands:,} cands)", fontsize=8, pad=4)
     for ci, title in enumerate(col_titles):
         if ci != 1:
@@ -691,14 +693,14 @@ def fig_dataset_image_grid(
                     for sp in ax.spines.values():
                         sp.set_edgecolor("limegreen"); sp.set_linewidth(3)
             elif ci == 2:
-                match = "=" if a_ret_cls == cls else "≠"
+                match = "=" if a_ret_cls == cls else "!="
                 color = "green" if a_ret_cls == cls else "red"
-                ax.set_title(f"→ {a_ret_cname} {match}",
+                ax.set_title(f"-> {a_ret_cname} {match}",
                              fontsize=7, pad=2, color=color, fontweight="bold")
             elif ci == 3:
-                match = "=" if b_ret_cls == cls else "≠"
+                match = "=" if b_ret_cls == cls else "!="
                 color = "green" if b_ret_cls == cls else "red"
-                ax.set_title(f"→ {b_ret_cname} {match}",
+                ax.set_title(f"-> {b_ret_cname} {match}",
                              fontsize=7, pad=2, color=color, fontweight="bold")
                 if b_suc:
                     for sp in ax.spines.values():
@@ -886,9 +888,9 @@ def fig_cifar_centered_image_grid(N: int, seed: int,
                     for sp in ax.spines.values():
                         sp.set_edgecolor("limegreen"); sp.set_linewidth(3)
             elif ci == 4:
-                match = "=" if ret_cls == cls else "≠"
+                match = "=" if ret_cls == cls else "!="
                 color = "green" if ret_cls == cls else "red"
-                ax.set_title(f"→ {ret_cname} {match}",
+                ax.set_title(f"-> {ret_cname} {match}",
                              fontsize=7, pad=2, color=color, fontweight="bold")
 
         status = "CORRECT" if bl_ok else "FAIL"
@@ -923,34 +925,15 @@ def main() -> None:
     print("Post-Attack Visualization")
     print("=" * 60)
 
-    # Check prerequisites
-    two_stage_csv = EXP_DIR / "grayscale_cifar_two_stage_results.csv"
-    if not two_stage_csv.exists():
-        print(f"  ERROR: {two_stage_csv.name} not found.")
-        print("  Run: python -m experiments.grayscale_cifar_two_stage_attack  first.")
-        return
-
-    if not (ONE_PIX_DIR / "seed_42").exists():
-        print("  ERROR: one_pixel_test/seed_42/ not found.")
-        print("  Run: python -m experiments.grayscale_cifar_two_stage_attack  first.")
-        return
-
     print("\nLoading MNIST ...")
     mnist_images, mnist_labels = load_mnist()
     print(f"  ok  {len(mnist_images)} samples")
 
-    print("Loading CIFAR-10 (for network output column) ...")
+    print("Loading CIFAR-10 ...")
     cifar_gray, cifar_labels = load_cifar_gray()
-    X_cifar, _ = sample_class_balanced((cifar_gray, cifar_labels), 10, seed=42)
-    print(f"  ok  stored patterns: {X_cifar.shape}")
+    print(f"  ok  {len(cifar_gray)} samples")
 
     print("\nGenerating figures ...")
-
-    print("Figure 1: CIFAR two-stage image grid (raw N=10) ...")
-    fig_cifar_image_grid(X_cifar)
-
-    print("Figure 2: CIFAR two-stage conditions comparison ...")
-    fig_cifar_conditions()
 
     print("Figure 3: MNIST successful attack examples ...")
     fig_mnist_examples(mnist_images, mnist_labels)

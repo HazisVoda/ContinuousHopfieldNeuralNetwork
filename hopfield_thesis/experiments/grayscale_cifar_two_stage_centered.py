@@ -20,7 +20,7 @@ Two-stage pipeline (preserved from original design):
   Stage 1 — precompute all attacks; save attacked images to disk as PNGs.
   Stage 2 — retrieve from saved images; measure success rates.
 
-Conditions (same 2×2 as original):
+Conditions (same 2x2 as original):
   A1: Clean stored | gray-space attacked query        (5,120 candidates)
   A2: Clean stored | RGB channel-wise attacked query  (15,360 candidates)
   B1: Gray-attacked patterns stored | clean query
@@ -143,7 +143,7 @@ def pairwise_cosine_mean(X: torch.Tensor) -> float:
 
 
 def _batch_cosine(ret: torch.Tensor, pat: torch.Tensor) -> torch.Tensor:
-    """ret: (d, M),  pat: (d,)  → (M,) cosine similarities."""
+    """ret: (d, M),  pat: (d,)  -> (M,) cosine similarities."""
     dots   = ret.T @ pat
     r_nrms = ret.norm(dim=0)
     return dots / (r_nrms * pat.norm()).clamp(min=1e-8)
@@ -342,7 +342,7 @@ def run_experiment(
             _save_gray(r2["attacked_gray"],  seed_dir / f"probe{i:03d}_{cname}_a2_rgb_gray.png")
             _save_rgb( r2["attacked_rgb"],   seed_dir / f"probe{i:03d}_{cname}_a2_rgb_color.png")
 
-        print(f"  N={N} seed={seed}: {len(probe_idx) * 4} PNGs → {seed_dir.relative_to(ROOT)}/")
+        print(f"  N={N} seed={seed}: {len(probe_idx) * 4} PNGs -> {seed_dir.relative_to(ROOT)}/")
 
         # ── Stage 2: attacked storage matrices (B conditions) ─────────────────
         # B1: store attacked-gray patterns (in preprocessed space)
@@ -363,21 +363,21 @@ def run_experiment(
             ret_bl = hop.retrieve(q_proc, steps=1)
             bl_ok  = int(retrieval_accuracy(ret_bl, X_proc, i))
 
-            # A1: preprocessed attacked query → clean storage
+            # A1: preprocessed attacked query -> clean storage
             suc_a1 = int(atk_a1[i]["success"])
             ri_a1  = atk_a1[i]["retrieved_index"]
 
-            # A2: RGB preprocessed attacked query → clean storage
+            # A2: RGB preprocessed attacked query -> clean storage
             suc_a2 = int(atk_a2[i]["success"])
             ri_a2  = atk_a2[i]["retrieved_index"]
 
-            # B1: clean query → attacked storage (local index pi)
+            # B1: clean query -> attacked storage (local index pi)
             q_b1  = proc_query(q, mu1)
             ret_b1 = hop_b1.retrieve(q_b1, steps=1)
             ri_b1  = _nearest_stored(ret_b1, X_b1)
             suc_b1 = int(ri_b1 != pi)
 
-            # B2: clean query → RGB-attacked storage
+            # B2: clean query -> RGB-attacked storage
             q_b2   = proc_query(q, mu2)
             ret_b2 = hop_b2.retrieve(q_b2, steps=1)
             ri_b2  = _nearest_stored(ret_b2, X_b2)
@@ -466,7 +466,7 @@ def save_attack_figure(
     if n_show == 1:
         axes = axes[None, :]
     fig.suptitle(
-        f"CIFAR-10 Centered+Norm — Successful One-Pixel Attacks  (N={N}, β={BETA})\n"
+        f"CIFAR-10 Centered+Norm — Successful One-Pixel Attacks  (N={N}, beta={BETA})\n"
         "Green border = attack succeeded",
         fontsize=10, fontweight="bold",
     )
@@ -526,7 +526,7 @@ def save_comparison_figure(all_summary: list[dict]) -> None:
     fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
     fig.suptitle(
         "Grayscale CIFAR-10 (Centered+Normalised) — Baseline & Attack Summary\n"
-        f"β={BETA} · 5 seeds · per-N results",
+        f"beta={BETA} · 5 seeds · per-N results",
         fontsize=10, fontweight="bold",
     )
 
@@ -645,9 +645,9 @@ def build_report(detail: list[dict], summary: list[dict]) -> str:
     p("=" * 68)
     p()
     p("Preprocessing: X_proc = (X - mu) / ||X - mu||  (per stored-set mean)")
-    p(f"β={BETA}  Seeds={SEEDS}")
+    p(f"beta={BETA}  Seeds={SEEDS}")
     p()
-    p("Design: 2 × 2 conditions")
+    p("Design: 2 x 2 conditions")
     p(f"  A1: Clean stored | gray-space attacked query      ({N_CANDS_GRAY:,} cands)")
     p(f"  A2: Clean stored | RGB channel-wise attack query  ({N_CANDS_RGB:,} cands)")
     p("  B1: Gray-attacked patterns stored | clean query")
@@ -744,7 +744,7 @@ def build_report(detail: list[dict], summary: list[dict]) -> str:
     p(f"  3. At N={N_ATTACK}, some attacks succeed. The basins begin to overlap as")
     p("     N grows, creating the same exploitable regime seen for MNIST at N=100.")
     p("     This confirms the model follows the expected capacity scaling:")
-    p("     few patterns → robust; many patterns → vulnerable.")
+    p("     few patterns -> robust; many patterns -> vulnerable.")
     p()
     p("  4. The raw CIFAR result (0% attack success) was pseudo-robustness by")
     p("     confusion. The centred result at N=100 is genuine robustness by basin")

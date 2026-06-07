@@ -2,7 +2,7 @@
 Grayscale CIFAR-10 baseline characterization.
 
 Capacity-only experiment — NO adversarial attacks.
-Converts 32×32 RGB CIFAR-10 images to 1024-dim grayscale vectors and measures
+Converts 32x32 RGB CIFAR-10 images to 1024-dim grayscale vectors and measures
 clean retrieval baseline failure rate vs N for the continuous Hopfield network.
 
 Run: python -m experiments.grayscale_cifar_baseline
@@ -201,7 +201,7 @@ def save_figure(rows: list[dict], mnist_ref: dict[int, tuple[float, float]]) -> 
     ax = axes[0]
     ax.errorbar(N_CIFAR, bl_means, yerr=bl_stds, fmt="o-",
                 color="darkorange", lw=2, ms=6, capsize=5,
-                label="CIFAR-10 grayscale (5-seed mean ± std)")
+                label="CIFAR-10 grayscale (5-seed mean +/- std)")
     if mnist_Ns:
         ax.plot(mnist_Ns, mnist_bl, "s--", color="steelblue", lw=1.5, ms=7,
                 label="MNIST class-balanced reference (5-seed mean)")
@@ -240,7 +240,7 @@ def save_figure(rows: list[dict], mnist_ref: dict[int, tuple[float, float]]) -> 
                     textcoords="offset points", ha="center", fontsize=8)
 
     fig.suptitle("Grayscale CIFAR-10 — Continuous Hopfield Network Baseline Characterization\n"
-                 "Class-balanced storage, 5 seeds × 50 probes, no noise or attacks",
+                 "Class-balanced storage, 5 seeds x 50 probes, no noise or attacks",
                  fontsize=11, fontweight="bold")
     plt.tight_layout()
     path = FIG_DIR / "grayscale_cifar_baseline.png"

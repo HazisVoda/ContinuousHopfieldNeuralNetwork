@@ -6,7 +6,7 @@ attack-attributable failures on grayscale CIFAR-10 stored in a continuous
 Hopfield network with N=10, class-balanced, β=8.0.
 
 The WhiteBoxOnePixelAttacker in hopfield/attacks.py hardcodes n_locs=784 for
-28×28 MNIST.  For 32×32 CIFAR (1024-dim) the same exhaustive logic is
+28x28 MNIST.  For 32x32 CIFAR (1024-dim) the same exhaustive logic is
 implemented inline below with n_locs=1024, identical in every other respect.
 
 Run: python -m experiments.grayscale_cifar_attack
@@ -37,7 +37,7 @@ from hopfield.sampling import sample_class_balanced
 N       = 10
 BETA    = 8.0
 SEEDS   = [42, 43, 44, 45, 46]
-IMG_DIM = 1024          # 32 × 32
+IMG_DIM = 1024          # 32 x 32
 IMG_SZ  = 32
 
 DATA_DIR = ROOT / "data"
@@ -64,7 +64,7 @@ def load_cifar10_gray() -> tuple[torch.Tensor, torch.Tensor]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Inline exhaustive white-box attacker for 32×32 CIFAR (1024-dim)
+# Inline exhaustive white-box attacker for 32x32 CIFAR (1024-dim)
 # Identical to WhiteBoxOnePixelAttacker.attack() except n_locs=1024, grid=32
 # ─────────────────────────────────────────────────────────────────────────────
 

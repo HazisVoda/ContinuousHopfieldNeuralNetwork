@@ -1,7 +1,7 @@
 """
 Phase 3 closing diagnostics.
 
-Diagnostic C: σ-sweep to find the exact magnitude-matched random-noise comparison.
+Diagnostic C: sigma-sweep to find the exact magnitude-matched random-noise comparison.
 Diagnostic D: Characterization of the 30 vulnerable probes at the headline cell.
 
 No attack re-runs. Reads existing Phase 3 CSVs + runs clean retrievals only.
@@ -194,7 +194,7 @@ def logistic_cv(X: np.ndarray, y: np.ndarray, n_folds: int = 5) -> tuple[float, 
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Diagnostic C: magnitude-matched σ sweep
+# Diagnostic C: magnitude-matched sigma sweep
 # ─────────────────────────────────────────────────────────────────────────────
 
 def run_diagnostic_c(
@@ -378,7 +378,7 @@ def run_diagnostic_d(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Figure C: σ sweep
+# Figure C: sigma sweep
 # ─────────────────────────────────────────────────────────────────────────────
 
 def save_figure_c(c_rows: list[dict], best_sigma: float, fig_path: str) -> None:
@@ -397,13 +397,13 @@ def save_figure_c(c_rows: list[dict], best_sigma: float, fig_path: str) -> None:
     ax.axhline(COND_WB_SUCCESS, color="crimson", linestyle="--", lw=1.8,
                label=f"Conditional WB attack success ({COND_WB_SUCCESS*100:.1f}%)")
     ax.axvline(best_sigma, color="darkorange", linestyle=":", lw=1.8,
-               label=f"Best-matched σ = {best_sigma:.3f} (L2 ≈ {best_sigma*28:.3f})")
+               label=f"Best-matched sigma = {best_sigma:.3f} (L2 ≈ {best_sigma*28:.3f})")
     ax.set_xscale("log")
-    ax.set_xlabel("σ (Gaussian noise std, log scale)", fontsize=10)
+    ax.set_xlabel("sigma (Gaussian noise std, log scale)", fontsize=10)
     ax.set_ylabel("Conditional retrieval failure rate", fontsize=10)
     ax.set_ylim(-0.01, max(cond_means) * 1.5 + 0.05)
     ax.set_title(
-        "Conditional random-noise failure vs σ, with magnitude-matched WB attack reference\n"
+        "Conditional random-noise failure vs sigma, with magnitude-matched WB attack reference\n"
         "N=100 class-balanced, conditional on clean-retrievable probes",
         fontsize=9,
     )
@@ -528,14 +528,14 @@ def print_summary(c_rows: list[dict], d: dict) -> None:
     sharpened    = COND_WB_SUCCESS / max(matched_fr_m, 1e-6)
 
     print("\n=== DIAGNOSTIC C: Magnitude-matched random noise ===\n")
-    print(f"Best-matched σ: {best_sigma:.3f}  "
+    print(f"Best-matched sigma: {best_sigma:.3f}  "
           f"(target L2 = {WB_MEAN_L2:.3f}, actual mean L2 = {sigma_agg[best_sigma]['mean_l2']:.4f})")
-    print(f"Conditional random-noise failure at matched σ: "
+    print(f"Conditional random-noise failure at matched sigma: "
           f"{matched_fr_m:.3f} +/- {matched_fr_s:.3f}")
     print(f"Conditional WB attack success: {COND_WB_SUCCESS*100:.1f}%")
     print(f"Sharpened amplification factor: {sharpened:.1f}x\n")
     print("Full sweep (conditional failure rate, mean +/- std across seeds):")
-    print(f"{'σ':>8}  {'Mean L2':>10}  {'Cond. failure':>18}")
+    print(f"{'sigma':>8}  {'Mean L2':>10}  {'Cond. failure':>18}")
     print("-" * 42)
     for sigma in SIGMAS_C:
         a  = sigma_agg[sigma]
@@ -605,7 +605,7 @@ def print_summary(c_rows: list[dict], d: dict) -> None:
         f"white-box one-pixel attacks succeed on {COND_WB_SUCCESS*100:.1f}% of "
         f"clean-retrievable probes, representing a {sharpened:.1f}x amplification "
         f"over equivalent-magnitude random noise ({matched_fr_m*100:.1f}% conditional "
-        f"failure at σ={best_sigma:.3f}). Vulnerable probes {vuln_pred}.\""
+        f"failure at sigma={best_sigma:.3f}). Vulnerable probes {vuln_pred}.\""
     )
 
 
@@ -622,7 +622,7 @@ def main() -> None:
     print("\nLoading MNIST ...")
     images, labels = load_mnist_train()
 
-    print("\n--- Diagnostic C: σ sweep (headline cell) ---")
+    print("\n--- Diagnostic C: sigma sweep (headline cell) ---")
     c_rows = run_diagnostic_c(images, labels, EXP_DIR)
     print(f"  Saved phase3_diag_c_matched_sigma.csv  ({len(c_rows)} rows)")
 

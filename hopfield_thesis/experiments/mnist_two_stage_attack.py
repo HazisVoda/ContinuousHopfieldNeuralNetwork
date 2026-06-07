@@ -189,7 +189,7 @@ def run_experiment(
             _save_gray(stored[i],   seed_dir / f"probe{i:03d}_dig{cls_name}_clean.png")
             _save_gray(r["attacked"], seed_dir / f"probe{i:03d}_dig{cls_name}_attacked.png")
 
-        print(f"  Seed {seed}: {2*N} images saved → {seed_dir.relative_to(ROOT)}/")
+        print(f"  Seed {seed}: {2*N} images saved -> {seed_dir.relative_to(ROOT)}/")
 
         # ── Stage 2: build attacked storage matrix (B condition) ─────────────
         X_b   = torch.stack([attacks[i]["attacked"] for i in range(N)], dim=1)
@@ -257,7 +257,7 @@ def run_experiment(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Figure: 10×3 grid (one probe per class, seed=42)
+# Figure: 10x3 grid (one probe per class, seed=42)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def save_figure(
