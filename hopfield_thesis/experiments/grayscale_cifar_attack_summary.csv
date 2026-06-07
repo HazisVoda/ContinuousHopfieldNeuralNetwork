@@ -1,0 +1,6 @@
+seed,n_baseline_correct,n_attack_success,raw_attack_success_rate,conditional_attack_success_rate,mean_attack_l2_among_successes_or_nan,mean_pairwise_cosine
+42,1,0,0.0,0.0,nan,0.88433
+43,2,0,0.0,0.0,nan,0.79207
+44,5,0,0.0,0.0,nan,0.86805
+45,1,0,0.0,0.0,nan,0.8632
+46,1,0,0.0,0.0,nan,0.75291

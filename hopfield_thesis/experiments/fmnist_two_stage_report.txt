@@ -1,0 +1,78 @@
+================================================================
+FASHION-MNIST TWO-STAGE ONE-PIXEL ATTACK EXPERIMENT
+================================================================
+
+Setup: N=100, class-balanced, beta=8.0, 5 seeds
+Total probe evaluations: 500  (100 per seed x 5 seeds)
+Candidates per probe: 3,920  (784 locs x 5 values)
+
+Conditions:
+  A: Clean stored patterns | Attacked query
+  B: Attacked patterns stored | Clean query
+
+Images saved to: one_pixel_test/fashion_mnist_seed_k/
+  (1000 PNG files total)
+
+================================================================
+PIXEL SELECTION METHOD
+================================================================
+
+  Cosine-delta selection (real attack found): 104/500 probes
+  First-order sensitivity fallback:           396/500 probes
+
+================================================================
+BASELINE RETRIEVAL (clean stored, clean query)
+================================================================
+
+  Seed 42: 18/100 correct  (pairwise cosine 0.588)
+  Seed 43: 11/100 correct  (pairwise cosine 0.607)
+  Seed 44: 22/100 correct  (pairwise cosine 0.602)
+  Seed 45: 20/100 correct  (pairwise cosine 0.593)
+  Seed 46: 21/100 correct  (pairwise cosine 0.587)
+  Mean baseline failure: 81.6% +/- 4.4%
+  Total baseline-correct probes (across 5 seeds): 92
+
+================================================================
+CONDITION A: Attacked query, clean stored
+================================================================
+
+  Seed-level successes out of 100:
+    Seed 42: 85/100
+    Seed 43: 90/100
+    Seed 44: 79/100
+    Seed 45: 82/100
+    Seed 46: 80/100
+  Raw success rate:         83.2% +/- 4.4%
+  Conditional success rate (among baseline-correct): 9.0% +/- 4.9%
+
+================================================================
+CONDITION B: Attacked stored, clean query
+================================================================
+
+  Seed-level successes out of 100:
+    Seed 42: 83/100
+    Seed 43: 89/100
+    Seed 44: 77/100
+    Seed 45: 80/100
+    Seed 46: 77/100
+  Raw success rate:         81.2% +/- 5.0%
+  Conditional success rate (among baseline-correct): 1.1% +/- 2.5%
+
+================================================================
+INTERPRETATION
+================================================================
+
+Mean pairwise cosine at N=100: 0.595
+
+  Condition                                       Raw success   Cond success
+  ------------------------------------------------------------------------
+  A: Attacked query, clean stored                       83.2%            9.0%
+  B: Attacked stored, clean query                       81.2%            1.1%
+
+Verdict:
+  Attacks succeed conditionally: condition A achieves 9.0%,
+  condition B achieves 1.1% success among baseline-correct probes.
+  The 104/500 probes where cosine delta < -1e-4 represent
+  genuine adversarial perturbations that redirect retrieval.
+
+================================================================

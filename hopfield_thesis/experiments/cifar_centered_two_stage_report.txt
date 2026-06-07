@@ -1,0 +1,89 @@
+====================================================================
+GRAYSCALE CIFAR-10 TWO-STAGE ATTACK — CENTERED+NORMALISED MODEL
+====================================================================
+
+Preprocessing: X_proc = (X - mu) / ||X - mu||  (per stored-set mean)
+β=8.0  Seeds=[42, 43, 44, 45, 46]
+
+Design: 2 × 2 conditions
+  A1: Clean stored | gray-space attacked query      (5,120 cands)
+  A2: Clean stored | RGB channel-wise attack query  (15,360 cands)
+  B1: Gray-attacked patterns stored | clean query
+  B2: RGB-attacked patterns stored  | clean query
+
+====================================================================
+N = 100
+====================================================================
+
+  Seed         BL ok    cos_raw    cos_proc    A1 cond    A2 cond
+  ------------------------------------------------------------
+  42          50/50      +0.8458     -0.0088       0.0%       0.0%
+  43          50/50      +0.8400     -0.0091       0.0%       0.0%
+  44          50/50      +0.8296     -0.0092       0.0%       0.0%
+  45          50/50      +0.8244     -0.0085       0.0%       0.0%
+  46          50/50      +0.8438     -0.0093       0.0%       0.0%
+
+  Pooled (all 5 seeds, 250 probes):
+    Baseline correct:  250/250  (100.0%)
+    A1 cond. success:  0/250  (0.0%)
+    A2 cond. success:  0/250  (0.0%)
+    B1 cond. success:  0/250  (0.0%)
+    B2 cond. success:  0/250  (0.0%)
+
+  A2 best channel:  {'R': 0, 'G': 250, 'B': 0}
+
+====================================================================
+N = 500
+====================================================================
+
+  Seed         BL ok    cos_raw    cos_proc    A1 cond    A2 cond
+  ------------------------------------------------------------
+  42          40/50      +0.8388     -0.0014       0.0%       0.0%
+  43          38/50      +0.8344     -0.0013       0.0%       0.0%
+  44          44/50      +0.8308     -0.0018       0.0%       0.0%
+  45          37/50      +0.8330     -0.0011      10.8%       5.4%
+  46          40/50      +0.8367     -0.0016       0.0%       0.0%
+
+  Pooled (all 5 seeds, 250 probes):
+    Baseline correct:  199/250  (79.6%)
+    A1 cond. success:  4/199  (2.0%)
+    A2 cond. success:  2/199  (1.0%)
+    B1 cond. success:  0/199  (0.0%)
+    B2 cond. success:  0/199  (0.0%)
+
+  A2 best channel:  {'R': 0, 'G': 250, 'B': 0}
+
+====================================================================
+CROSS-DATASET COMPARISON (conditional attack success, 5 seeds pooled)
+====================================================================
+
+  Dataset                              N    BL fail    A1 cond    A2 cond
+  --------------------------------------------------------------------
+  MNIST (raw)                        100      11.8%       3.7%       4.4%
+  FMNIST (raw)                       100      81.6%       9.0%      11.5%
+  CIFAR (raw, N=10)                   10      80.0%       0.0%       0.0%
+  CIFAR (centered+norm, N=100)       100       0.0%       0.0%       0.0%
+  CIFAR (centered+norm, N=500)       500      20.4%       2.0%       1.0%
+
+====================================================================
+INTERPRETATION
+====================================================================
+
+  1. The model works correctly on CIFAR after centering.
+     N=100: 100% baseline retrieval (down from 20% at N=10 raw).
+
+  2. At N=100, attacks fail — NOT due to confusion but due to basin depth.
+     The anti-correlated patterns (cos ≈ -0.01) create deep, well-separated
+     energy basins. One pixel (1/1024 dims, Δmax=1.0) cannot overcome the
+     entire-pattern similarity signal that anchors retrieval.
+
+  3. At N=500, some attacks succeed. The basins begin to overlap as
+     N grows, creating the same exploitable regime seen for MNIST at N=100.
+     This confirms the model follows the expected capacity scaling:
+     few patterns → robust; many patterns → vulnerable.
+
+  4. The raw CIFAR result (0% attack success) was pseudo-robustness by
+     confusion. The centred result at N=100 is genuine robustness by basin
+     depth. These are fundamentally different and distinguishable by baseline.
+
+====================================================================

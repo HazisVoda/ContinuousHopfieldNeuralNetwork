@@ -1,0 +1,109 @@
+================================================================
+GRAYSCALE CIFAR-10 TWO-STAGE ATTACK EXPERIMENT
+================================================================
+
+Setup: N=10, class-balanced, beta=8.0, 5 seeds
+Total probe evaluations: 50 (10 per seed x 5 seeds)
+
+Conditions:
+  A1: Clean stored | Gray-space attacked query    (5,120 candidates)
+  A2: Clean stored | RGB channel-wise attacked query (15,360 candidates)
+  B1: Gray-attacked patterns stored | Clean query
+  B2: RGB-attacked patterns stored  | Clean query
+
+Attacked images saved to: one_pixel_test/  (200 PNG files)
+
+================================================================
+BASELINE RETRIEVAL (clean stored, clean query)
+================================================================
+
+  Seed 42: 1/10 correct  (pairwise cosine 0.884)
+  Seed 43: 2/10 correct  (pairwise cosine 0.792)
+  Seed 44: 5/10 correct  (pairwise cosine 0.868)
+  Seed 45: 1/10 correct  (pairwise cosine 0.863)
+  Seed 46: 1/10 correct  (pairwise cosine 0.753)
+  Mean baseline failure: 80.0% +/- 17.3%
+  Total baseline-correct probes (across 5 seeds): 10
+
+================================================================
+CONDITION A1: Gray-space attacked query, clean stored
+================================================================
+
+  Seed-level successes out of 10:
+    Seed 42: 9/10
+    Seed 43: 8/10
+    Seed 44: 5/10
+    Seed 45: 9/10
+    Seed 46: 9/10
+  Raw success rate:         80.0% +/- 17.3%
+  Conditional success rate (among baseline-correct): 0.0% +/- 0.0%
+
+================================================================
+CONDITION A2: RGB channel-wise attacked query, clean stored
+================================================================
+
+  Seed-level successes out of 10:
+    Seed 42: 9/10
+    Seed 43: 8/10
+    Seed 44: 5/10
+    Seed 45: 9/10
+    Seed 46: 9/10
+  Raw success rate:         80.0% +/- 17.3%
+  Conditional success rate (among baseline-correct): 0.0% +/- 0.0%
+
+  Best attack channel distribution (across 50 probes):
+    R: 0/50 (0%)
+    G: 50/50 (100%)
+    B: 0/50 (0%)
+
+================================================================
+CONDITION B1: Gray-attacked patterns stored, clean query
+================================================================
+
+  Seed-level successes out of 10:
+    Seed 42: 9/10
+    Seed 43: 8/10
+    Seed 44: 5/10
+    Seed 45: 9/10
+    Seed 46: 9/10
+  Raw success rate:         80.0% +/- 17.3%
+  Conditional success rate (among baseline-correct on clean net): 0.0% +/- 0.0%
+
+================================================================
+CONDITION B2: RGB-attacked patterns stored, clean query
+================================================================
+
+  Seed-level successes out of 10:
+    Seed 42: 9/10
+    Seed 43: 8/10
+    Seed 44: 5/10
+    Seed 45: 9/10
+    Seed 46: 9/10
+  Raw success rate:         80.0% +/- 17.3%
+  Conditional success rate (among baseline-correct on clean net): 0.0% +/- 0.0%
+
+================================================================
+INTERPRETATION
+================================================================
+
+Mean pairwise cosine at N=10: 0.832  (MNIST N=100 reference: 0.397)
+
+  Condition                                       Raw success   Cond success
+  ------------------------------------------------------------------------
+  A1: Gray attack as query                              80.0%            0.0%
+  A2: RGB channel attack as query                       80.0%            0.0%
+  B1: Gray-attacked stored, clean query                 80.0%            0.0%
+  B2: RGB-attacked stored, clean query                  80.0%            0.0%
+
+Verdict:
+  Null result extends across all four conditions. The raw success rate
+  for all conditions equals the baseline failure rate (80.0%) — the
+  'successes' are probes that were already failing before any attack.
+  Among the 10 baseline-correct probes, zero were affected by single-
+  pixel perturbations in any configuration (A1, A2, B1, B2).
+  The professor's two-stage split confirms the conclusion: CIFAR-10's
+  high pairwise cosine (0.832) is the dominant factor. Single-pixel
+  changes in either query space or storage space are overwhelmed by the
+  overall similarity structure, which determines retrieval outcomes.
+
+================================================================

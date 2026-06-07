@@ -1,0 +1,54 @@
+========================================================
+GRAYSCALE CIFAR-10 ONE-PIXEL ATTACK: NULL RESULT DOCUMENTATION
+========================================================
+
+Setup: N=10, class-balanced, beta=8.0, 5 seeds, white-box attacker
+Total probes attacked: 50 (10 per seed x 5 seeds)
+Candidates evaluated per probe: 5120 (1024 pixels x 5 values)
+
+=== BASELINE RETRIEVAL ===
+
+Seed-level baseline (correct retrievals out of 10):
+  Seed 42: 1/10
+  Seed 43: 2/10
+  Seed 44: 5/10
+  Seed 45: 1/10
+  Seed 46: 1/10
+Mean baseline failure: 80.0% +/- 17.3%
+
+=== ATTACK OUTCOMES ===
+
+Seed-level attack outcomes (successes out of 10):
+  Seed 42: 0/10
+  Seed 43: 0/10
+  Seed 44: 0/10
+  Seed 45: 0/10
+  Seed 46: 0/10
+Raw attack success rate: 0.0% +/- 0.0%
+Conditional attack success rate (among baseline-correct probes): 0.0% +/- 0.0%
+
+Among the baseline-correct probes (total across all seeds: 10):
+  - Successfully attacked: 0
+  - Robust to all 5120 candidate single-pixel perturbations: 10
+
+=== INTERPRETATION ===
+
+Pairwise pattern similarity (mean off-diagonal cosine):
+  N=10 grayscale CIFAR: 0.832
+  N=100 MNIST (reference): 0.397
+
+Comparison to MNIST headline cell:
+  Dataset                      Baseline failure  Conditional attack success
+  -------------------------------------------------------------------------
+  MNIST N=100                              9.2%                        3.1%
+  Grayscale CIFAR N=10                    80.0%                        0.0%
+
+Verdict:
+  Null result confirmed: across 10 baseline-correct probes, the
+  white-box one-pixel attacker found zero successful single-pixel
+  perturbations among 5120 candidates per probe. This documents that
+  grayscale CIFAR-10 with raw-pixel storage is not susceptible to
+  one-pixel adversarial attacks at this storage size, consistent with
+  the dataset operating outside the network's reliable retrieval regime.
+
+========================================================

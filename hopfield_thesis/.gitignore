@@ -19,6 +19,7 @@ env/
 # Project-specific generated outputs
 data/
 # figures/
+one_pixel_test/
 
 # OS
 .DS_Store

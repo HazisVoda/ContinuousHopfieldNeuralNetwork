@@ -1,0 +1,74 @@
+====================================================================
+GRAYSCALE CIFAR-10 PATTERN CROWDING FIX EXPERIMENT
+====================================================================
+
+Seeds: [42, 43, 44, 45, 46]  |  β=8.0  |  N values: [10, 50, 100]
+β sweep: [4.0, 8.0, 16.0, 32.0, 64.0] (centered, N=10)
+Attack comparison: raw vs centered, N=10
+
+====================================================================
+EXPERIMENT 1: PREPROCESSING COMPARISON
+====================================================================
+
+  Method                    N    Baseline fail    Mean cosine
+  ----------------------------------------------------------
+  raw                      10    80.0% +/- 17.3%   0.8321 +/- 0.0567
+  raw                      50    94.0% +/-  6.2%   0.8351 +/- 0.0116
+  raw                     100    97.8% +/-  1.8%   0.8367 +/- 0.0093
+
+  centered                 10     0.0% +/-  0.0%  -0.0986 +/- 0.0119
+  centered                 50    20.4% +/-  8.2%  -0.0186 +/- 0.0010
+  centered                100    26.0% +/-  2.9%  -0.0090 +/- 0.0003
+
+  centered_norm            10     0.0% +/-  0.0%  -0.0986 +/- 0.0119
+  centered_norm            50     0.0% +/-  0.0%  -0.0186 +/- 0.0010
+  centered_norm           100     0.0% +/-  0.0%  -0.0090 +/- 0.0003
+
+  N=10: Raw failure 80.0% → Centered 0.0% → Centered+Norm 0.0%  (cosine 0.832 → -0.099)
+  N=50: Raw failure 94.0% → Centered 20.4% → Centered+Norm 0.0%  (cosine 0.835 → -0.019)
+  N=100: Raw failure 97.8% → Centered 26.0% → Centered+Norm 0.0%  (cosine 0.837 → -0.009)
+
+====================================================================
+EXPERIMENT 2: β SWEEP (centered, N=10)
+====================================================================
+
+       β         Baseline fail
+  ----------------------------
+     4.0       0.0% +/- 0.0%
+     8.0       0.0% +/- 0.0%
+    16.0       0.0% +/- 0.0%
+    32.0       0.0% +/- 0.0%
+    64.0       0.0% +/- 0.0%
+
+  Best β: 4
+
+====================================================================
+EXPERIMENT 3: ONE-PIXEL ATTACK (N=10, β=8.0)
+====================================================================
+
+  Raw pixels:
+    Baseline correct:      10/50  (80.0% failure)
+    Raw attack success:    40/50
+    Conditional attack:    0/10 = 0.0%
+    Probes with real Δcos: 0/50
+
+  Mean-centered:
+    Baseline correct:      50/50  (0.0% failure)
+    Raw attack success:    0/50
+    Conditional attack:    0/50 = 0.0%
+    Probes with real Δcos: 1/50
+
+====================================================================
+INTERPRETATION
+====================================================================
+
+  Mean-centering at N=10:
+    Pairwise cosine:  0.832 (raw)  →  -0.099 (centered)
+    Baseline failure: 80.0% (raw)  →  0.0% (centered)
+    Cond. attack:     0.0% (raw)  →  0.0% (centered)
+
+  Verdict: Mean-centering improves baseline retrieval but one-pixel
+  attacks still fail (or partially succeed). The remaining crowding
+  or the network's attractor structure prevents single-pixel redirection.
+
+====================================================================

@@ -399,6 +399,27 @@ capacity far below the MNIST operating point.
 
 Run: `python -m experiments.grayscale_cifar_baseline`
 
+### Grayscale CIFAR-10 attack documentation (`experiments/grayscale_cifar_attack.py`)
+
+This experiment was conducted to formally document the null result of white-box
+exhaustive one-pixel attacks on grayscale CIFAR-10.  The setup mirrors the MNIST
+headline cell (N=10, class-balanced, β=8.0, 5 seeds) with the attacker extended to
+1024 pixel locations × 5 candidate values = 5,120 candidates per probe.
+
+The dataset's high mean pairwise cosine similarity (≈0.65 at N=10) and 80%+ baseline
+retrieval failure rate place it firmly outside the network's reliable operating regime.
+The white-box attacker found zero successful single-pixel perturbations among all
+baseline-correct probes across all 5 seeds: the null result is confirmed.  This is
+consistent with the cross-dataset capacity characterisation in Chapter 5 — patterns
+that survive retrieval under high crowding sit deep in their attractor basins and are
+not susceptible to single-pixel perturbations.
+
+**Outputs:** `experiments/grayscale_cifar_attack_results.csv` (50 rows, one per probe),
+`experiments/grayscale_cifar_attack_summary.csv` (5 rows, one per seed),
+`experiments/grayscale_cifar_attack_report.txt` (full printed report).
+
+Run: `python -m experiments.grayscale_cifar_attack`
+
 ---
 
 ## Roadmap
