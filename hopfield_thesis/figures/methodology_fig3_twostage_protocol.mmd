@@ -1,0 +1,27 @@
+---
+title: "Figure M3: Two-Stage Experimental Protocol -- Conditional Success"
+---
+flowchart LR
+    A(["N probes\n5 seeds"])
+    B["Stage 1\nBaseline retrieval\n(no attack)"]
+    C{{"Baseline\ncorrect?"}}
+    D["Excluded\nMNIST: 59/500\nFMNIST: 408/500"]
+    E["Stage 2\nApply one-pixel\nattack -> q*"]
+    F{{"Retrieval\nchanged?"}}
+    G(["CONDITIONAL SUCCESS\nMNIST:  3.63%  (16/441)\nFMNIST: 8.70%  (8/92)\nCIFAR N=500: 2.01%  (4/199)"])
+    H(["Attack\nfails"])
+
+    A --> B --> C
+    C -- "No"  --> D
+    C -- "Yes" --> E --> F
+    F -- "Yes" --> G
+    F -- "No"  --> H
+
+    style A  fill:#D6EAF8,stroke:#1A5276,color:#2C3E50,font-weight:bold
+    style B  fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style C  fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style D  fill:#FADBD8,stroke:#B03A2E,color:#B03A2E
+    style E  fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style F  fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style G  fill:#D5F5E3,stroke:#1E6B3C,color:#1E6B3C,font-weight:bold
+    style H  fill:#FADBD8,stroke:#B03A2E,color:#B03A2E

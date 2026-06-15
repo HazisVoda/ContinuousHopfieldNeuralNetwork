@@ -1,0 +1,34 @@
+---
+title: "Figure M2: White-Box One-Pixel Attack Protocol"
+---
+flowchart LR
+    A(["Query q\n(d-dim)"])
+    B["Enumerate candidates\nd × 5 values\n3,920 / 5,120 total"]
+    C["Batch retrieve\nnet.retrieve(candidates)"]
+    D["Cosine to xn\nfor each candidate"]
+    E{{"Delta_cos < -1e-4?"}}
+    F["argmin Delta_cos\n-> pixel k*"]
+    G["1st-order\nsensitivity\n-> pixel k*"]
+    H["Set pixel k*\n-> q*"]
+    I{{"retrieved(q*)\n!= xn?"}}
+    J(["ATTACK\nSUCCESS"])
+    K(["ATTACK\nFAILS"])
+
+    A --> B --> C --> D --> E
+    E -- Yes --> F --> H
+    E -- No  --> G --> H
+    H --> I
+    I -- Yes --> J
+    I -- No  --> K
+
+    style A fill:#D6EAF8,stroke:#1A5276,color:#2C3E50,font-weight:bold
+    style B fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style C fill:#D6EAF8,stroke:#1A5276,color:#2C3E50
+    style D fill:#E8DAEF,stroke:#6C3483,color:#2C3E50
+    style E fill:#FAE5D3,stroke:#A04000,color:#A04000,font-weight:bold
+    style F fill:#D5F5E3,stroke:#1E6B3C,color:#1E6B3C
+    style G fill:#FADBD8,stroke:#B03A2E,color:#B03A2E
+    style H fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style I fill:#F2F3F4,stroke:#5D6D7E,color:#2C3E50
+    style J fill:#D5F5E3,stroke:#1E6B3C,color:#1E6B3C,font-weight:bold
+    style K fill:#FADBD8,stroke:#B03A2E,color:#B03A2E,font-weight:bold
